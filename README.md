@@ -27,7 +27,7 @@ The app is one Next.js app, so one deploy runs the pages and the server code.
 
 How it fits together:
 
-- `service.ts` and `module.ts` tell Compute what to run. The module is named `smalllink`, so deploys go to the Prisma project with that name.
+- `service.ts` and `module.ts` tell Compute what to run. The module is named `smalllink-app`, so deploys go to the Prisma project with that name. The database lives in a different project (`smalllink`), because a deploy refuses a project that holds resources it did not create.
 - `prisma.config.ts` is read by the Prisma 8 command line, which does the deploy.
 - `prisma7.config.ts` is read by the Prisma 7 command line (`prisma7`), which does `generate` and `migrate`. The app's database code still runs on Prisma 7, because Prisma 8's ORM is not final yet.
 - `.github/workflows/prisma-deploy.yml` deploys on every push. The default branch is production. Every other branch gets its own preview.
