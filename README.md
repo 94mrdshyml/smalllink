@@ -31,4 +31,13 @@ The app is one Next.js app, so one deploy runs the pages and the server code.
 - Create the tables once with `pnpm db:migrate:deploy` pointed at the production database. A deploy does not do this for you.
 - After the first deploy, set `BETTER_AUTH_URL` to the live address and deploy again.
 
+To deploy from your computer (the `preview` build of the Prisma CLI is the one that still has the `app` commands):
+
+```bash
+npx @prisma/cli@preview auth login
+npx @prisma/cli@preview app deploy --project smalllink --app smalllink --framework nextjs
+```
+
+Do not pass `--env` or add an `env` line to `prisma.compute.ts` with your local `.env`. It holds local values. The production values live in the Compute project's settings.
+
 Click countries come from the `x-vercel-ip-country` or `cf-ipcountry` header. If the host sends neither, countries show as unknown and everything else still works.
