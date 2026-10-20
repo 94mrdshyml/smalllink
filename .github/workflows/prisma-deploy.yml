@@ -25,7 +25,8 @@ jobs:
         with:
           node-version: 24
       - uses: oven-sh/setup-bun@v2
-      - run: pnpm install --frozen-lockfile
       - uses: prisma/cloud-deploy-action@v1
         with:
+          # The action only detects npm and bun on its own
+          install-command: pnpm install --frozen-lockfile
           build-command: pnpm build
