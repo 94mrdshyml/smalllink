@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+/* achromatic-ledger: chrome is ink, one blue (--hue) goes on click data only.
+   Ground is a blue-grey, one step off white, for a meter/ledger feel. */
+:root {
+  --outer: #e7eaef;
+  --ground: #f2f4f7;
+  --surface: #ffffff;
+  --raised: #e9ecf0;
+  --border: #dfe3e9;
+  --rule: #eceff3;
+  --control: #c4cad3;
+  --ink: #0a0a0a;
+  --muted: #646a73;
+  --hue: #1d5fbf;
+  --prior: #a9afb8;
+  --positive: #2e7d32;
+  --negative: #c4242a;
+}
+
+@theme inline {
+  --color-outer: var(--outer);
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-border: var(--border);
+  --color-rule: var(--rule);
+  --color-control: var(--control);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-hue: var(--hue);
+  --color-prior: var(--prior);
+  --color-positive: var(--positive);
+  --color-negative: var(--negative);
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+html {
+  background: var(--outer);
+}
+
+body {
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
