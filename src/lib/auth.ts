@@ -7,7 +7,11 @@ export const auth = betterAuth({
   database: prismaAdapter(db, { provider: "postgresql" }),
   emailAndPassword: { enabled: true, minPasswordLength: 8 },
   // Vercel preview URLs differ from BETTER_AUTH_URL
-  trustedOrigins: process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : [],
+  // Compute serves the app on *.prisma.build; Vercel preview URLs differ from BETTER_AUTH_URL
+  trustedOrigins: [
+    "https://*.prisma.build",
+    ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
+  ],
   // nextCookies must stay last
   plugins: [nextCookies()],
 });

@@ -9,3 +9,6 @@ next-env.d.ts
 src/generated
 .taste-skill
 AGENTS.md
+.prisma
+.prisma-composer
+.alchemy

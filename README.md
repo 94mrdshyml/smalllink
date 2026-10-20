@@ -9,7 +9,7 @@ Built with Next.js, Better-Auth, and Prisma ORM on Postgres. Every screen is a p
 ```bash
 pnpm install
 cp .env.example .env        # then fill in the three values
-pnpm prisma migrate dev     # creates the tables
+pnpm db:migrate:dev      # creates the tables
 pnpm dev
 ```
 
@@ -25,19 +25,22 @@ pnpm dev
 
 The app is one Next.js app, so one deploy runs the pages and the server code.
 
-- `prisma.compute.ts` tells Compute this is a Next.js app.
+How it fits together:
+
+- `service.ts` and `module.ts` tell Compute what to run. The module is named `smalllink`, so deploys go to the Prisma project with that name.
+- `prisma.config.ts` is read by the Prisma 8 command line, which does the deploy.
+- `prisma7.config.ts` is read by the Prisma 7 command line (`prisma7`), which does `generate` and `migrate`. The app's database code still runs on Prisma 7, because Prisma 8's ORM is not final yet.
+- `.github/workflows/prisma-deploy.yml` deploys on every push. The default branch is production. Every other branch gets its own preview.
 - `next.config.ts` sets `output: "standalone"`. Compute needs it, or the live address shows a 504.
-- Set the three settings above in the Compute project's production environment.
-- Create the tables once with `pnpm db:migrate:deploy` pointed at the production database. A deploy does not do this for you.
-- After the first deploy, set `BETTER_AUTH_URL` to the live address and deploy again.
 
-To deploy from your computer (the `preview` build of the Prisma CLI is the one that still has the `app` commands):
+Settings live in the Prisma project (production environment), not in the repo:
 
-```bash
-npx @prisma/cli@preview auth login
-npx @prisma/cli@preview app deploy --project smalllink --app smalllink --framework nextjs
-```
+- `DATABASE_URL`: a direct Postgres address (`postgres://...`)
+- `BETTER_AUTH_SECRET`
+- `BETTER_AUTH_URL`: the live address, no slash at the end. Set it after the first deploy, then push once more.
 
-Do not pass `--env` or add an `env` line to `prisma.compute.ts` with your local `.env`. It holds local values. The production values live in the Compute project's settings.
+A deploy does not create tables. Run `pnpm db:migrate:deploy` against the database for any new migration.
+
+Previews are only as separate as their settings. A preview branch has no `DATABASE_URL` until you add one for the `preview` role.
 
 Click countries come from the `x-vercel-ip-country` or `cf-ipcountry` header. If the host sends neither, countries show as unknown and everything else still works.

@@ -2,17 +2,21 @@
   "name": "smalllink",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma7 generate && next build",
     "start": "next start",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma7 generate",
     "typecheck": "tsc --noEmit",
-    "db:migrate:deploy": "prisma migrate deploy"
+    "db:migrate:deploy": "prisma7 migrate deploy",
+    "db:migrate:dev": "prisma7 migrate dev"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.1",
     "@prisma/client": "^7.10.1",
+    "@prisma/composer": "^0.32.0",
+    "@prisma/composer-prisma-cloud": "^0.32.0",
     "better-auth": "^1.7.12",
     "dotenv": "^18.0.8",
     "geist": "^1.8.1",
@@ -23,13 +27,15 @@
   },
   "devDependencies": {
     "@prisma/compute-sdk": "^0.43.0",
+    "@prisma/orm-postgres": "8.0.0-rc.18",
+    "@prisma/prisma7": "7.10.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.6.5",
     "@types/pg": "^8.23.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "postcss": "^8.5.31",
-    "prisma": "7.10.1",
+    "prisma": "8.0.0-rc.23",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2"
